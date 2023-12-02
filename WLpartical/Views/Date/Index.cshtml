@@ -1,0 +1,57 @@
+﻿@model WLpartical.Models.DateRange
+
+@{
+    ViewData["Title"] = "Date Calculation";
+}
+
+<h2>Date Calculation</h2>
+<br />
+
+@using (Html.BeginForm("CalculateDateDifference", "Date", FormMethod.Post))
+{
+    <label for="DateFrom">From:</label>
+    <input type="date" id="dateInputFrom" asp-for="DateFrom" />
+
+    <label for="DateTo">To:</label>
+    <input type="date" id="dateInputTo" asp-for="DateTo" />
+
+    <button type="submit" onclick="cacheSelectedDates()" class="btn btn-primary">Calculate</button>
+}
+
+@if (Model.DateDifference > 0)
+{
+    <p>Number of days between selected dates: @Model.DateDifference</p>
+}
+
+<script>
+    const dateInputFrom = document.getElementById('dateInputFrom');
+    const dateInputTo = document.getElementById('dateInputTo');
+
+    // Function to cache selected dates and update inputs before form submission
+    function cacheSelectedDates() {
+        localStorage.setItem('selectedFromDate', dateInputFrom.value);
+        localStorage.setItem('selectedToDate', dateInputTo.value);
+    }
+
+    // Retrieve cached dates and update date inputs on page load
+    const cachedFromDate = localStorage.getItem('selectedFromDate');
+    const cachedToDate = localStorage.getItem('selectedToDate');
+
+    if (cachedFromDate && cachedToDate) {
+        dateInputFrom.value = cachedFromDate;
+        dateInputTo.value = cachedToDate;
+    } else {
+        // If no cached dates, set the date inputs to today's date
+        const today = new Date().toISOString().split('T')[0];
+        dateInputFrom.value = today;
+        dateInputTo.value = today;
+
+
+    }
+
+    // Event listener for beforeunload to clear the cache
+    window.addEventListener('beforeunload', () => {
+        localStorage.removeItem('selectedFromDate');
+        localStorage.removeItem('selectedToDate');
+    });
+</script>

@@ -1,0 +1,70 @@
+﻿@model WLpartical.Models.User
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create New User</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" id="userForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" id="UserName" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailAdress" class="control-label"></label>
+                <input asp-for="EmailAdress" class="form-control" id="EmailAdress" />
+                <span asp-validation-for="EmailAdress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="JobPosition" class="control-label"></label>
+                <input asp-for="JobPosition" class="form-control" id="JobPosition" />
+                <span asp-validation-for="JobPosition" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <button onclick="window.location.href='@Url.Action("Index")'" class="btn btn-info">Back</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#userForm').submit(function (e) {
+                var userName = $('#UserName').val();
+                var emailAddress = $('#EmailAdress').val();
+                var jobPosition = $('#JobPosition').val();
+
+                $('.text-danger').remove(); // Remove any existing error messages
+
+                if (!userName) {
+                    e.preventDefault(); // Prevent form submission
+                    $('#UserName').after('<span class="text-danger">Please enter a username.</span>');
+                }
+                if (!emailAddress) {
+                    e.preventDefault(); // Prevent form submission
+                    $('#EmailAdress').after('<span class="text-danger">Please enter an email address.</span>');
+                }
+                if (!jobPosition) {
+                    e.preventDefault(); // Prevent form submission
+                    $('#JobPosition').after('<span class="text-danger">Please enter a job position.</span>');
+                }
+            });
+        });
+    </script>
+
+}

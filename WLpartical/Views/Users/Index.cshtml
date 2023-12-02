@@ -1,0 +1,55 @@
+﻿@model IEnumerable<WLpartical.Models.User>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>List of Users</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailAdress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobPosition)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailAdress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobPosition)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.UserId" class="btn btn-primary">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.UserId" class="btn btn-info">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.UserId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
